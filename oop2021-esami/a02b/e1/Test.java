@@ -3,9 +3,6 @@ package a02b.e1;
 import static a02b.e1.UniversityProgram.Sector.*;
 import static org.junit.Assert.*;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 
 public class Test {
@@ -24,29 +21,13 @@ public class Test {
 	 * CDL-specifica, in termini di numero di crediti (minimi e/o massimi) per ogni settore o 
 	 * gruppo di settori.
 	 * 
-	 * Sono considerati opzionali ai fini della possibilità di correggere
-	 * l'esercizio, ma concorrono comunque al raggiungimento della totalità del
-	 * punteggio: 
-	 * 
-	 * - implementazione dei quattro metodi della factory (ossia, nella parte obbligatoria è sufficiente 
-	 * implementarne 3 a piacimento) 
-	 * - la buona progettazione della soluzione, utilizzando patterns che portino a codice succinto 
-	 * che evita ripetizioni
-	 * 
-	 * Si tolga il commento dal metodo initFactory.
-	 * 
-	 * Indicazioni di punteggio: 
-	 * - correttezza della parte obbligatoria: 10 punti 
-	 * - correttezza della parte opzionale: 3 punti (ulteriore metodo della factory) 
-	 * - qualità della soluzione: 4 punti (per buon design)
-	 * 
 	 */
 
 	private UniversityProgramFactory factory = null;
 	
 	@org.junit.Before
 	public void initFactory() {
-		// this.factory = new UniversityProgramFactoryImpl();
+			this.factory = new UniversityProgramFactoryImpl();
 	}
 	
 	private void fillProgram(UniversityProgram program) {

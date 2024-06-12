@@ -14,6 +14,7 @@ public interface Diet {
 	enum Nutrient {
 		CARBS, PROTEINS, FAT
 	}
+
 	
 	/**
 	 * Add information about a new type of food ("pasta", "pollo", and so on) 
