@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * This interface models a parser, deterministic in the sense that it provides
  * just one result of parsing. A parser takes a list of tokens (short and atomic pieces of strings),
- * and recognises the structure of an initial part of such list, depending on the implementation logic.
+ * and recognises the strsucture of an initial part of such list, depending on the implementation logic.
  * For instance, the parser of a < non empty sequence of "a" >, would take the list
  * ("a","a","a","a","b","c"), and return ("b","c"). Instead, the same parser
  * with the input ("b","c","a","a","b","c") would fail, since it is not able to parse 
