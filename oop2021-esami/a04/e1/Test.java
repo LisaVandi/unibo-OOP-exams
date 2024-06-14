@@ -17,34 +17,13 @@ public class Test {
 	 * 
 	 * Il commento alle interfacce fornite, e i metodi di test qui sotto
 	 * costituiscono la necessaria spiegazione del problema.
-	 * 
-	 * Sono considerati opzionali ai fini della possibilità di correggere
-	 * l'esercizio, ma concorrono comunque al raggiungimento della totalità del
-	 * punteggio: 
-	 * 
-	 * - uno dei tre metodi fold/flatMap/filterOrElse di Either, a scelta
-	 * (ossia, nella parte obbligatoria è sufficiente implementarne 2 di questi 3, il terzo è quindi opzionale) 
-	 * 
-	 * - la buona progettazione della soluzione, riusando più codice possibile e tentendo tutte le implementazioni
-	 * molto succinte
-	 * 
-	 * Si tolga il commento dal metodo initFactory.
-	 * 
-	 * Indicazioni di punteggio: 
-	 * 
-	 * - correttezza della parte obbligatoria: 10 punti
-	 * 
-	 * - correttezza della parte opzionale: 2 punti (metodo ulteriore)
-	 * 
-	 * - qualità della soluzione: 5 punti (per la buona progettazione della soluzione, come sopra indicato)
-	 * 
 	 */
 
 	private EitherFactory factory;
 	
 	@org.junit.Before
 	public void initFactory() {
-		//this.factory = new EitherFactoryImpl(); // TOGLIERE IL COMMENTO A INIZIO LINEA QUI!!!
+		this.factory = new EitherFactoryImpl(); // TOGLIERE IL COMMENTO A INIZIO LINEA QUI!!!
 	}
 	
 	@org.junit.Test
