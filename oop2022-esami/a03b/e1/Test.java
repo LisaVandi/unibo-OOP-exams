@@ -9,9 +9,6 @@ import java.util.*;
  * dove il figlio sinistro e destro di un nodo sono calcolati solo all'occorrenza, se vi si accede,
  * e quindi possono potenzialmente essere infiniti.
  * 
- * Il commento alle interfacce fornite, e i metodi di test qui sotto costituiscono la necessaria 
- * spiegazione del problema.
- * 
  * Sono considerati opzionali ai fini della possibilità di correggere
  * l'esercizio, ma concorrono comunque al raggiungimento della totalità del
  * punteggio: 
@@ -35,7 +32,7 @@ public class Test {
 
 	@org.junit.Before
 	public void init() {
-		// this.factory = new LazyTreeFactoryImpl();
+		this.factory = new LazyTreeFactoryImpl();
 	}
 
 	@org.junit.Test
