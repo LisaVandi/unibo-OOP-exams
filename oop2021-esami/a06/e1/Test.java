@@ -20,26 +20,13 @@ public class Test {
 	 * 
 	 * - i metodi stayToLastSkipOne e alternateSkipOne (i cui test cominciano con "optional...")
 	 * 
-	 * - la buona progettazione della soluzione, riusando più codice possibile e tenendo tutte le 
-	 * implementazioni molto succinte
-	 * 
-	 * Si tolga il commento dal metodo initFactory.
-	 * 
-	 * Indicazioni di punteggio: 
-	 * 
-	 * - correttezza della parte obbligatoria: 9 punti
-	 * 
-	 * - correttezza della parte opzionale: 3 punti (2 metodi ulteriori)
-	 * 
-	 * - qualità della soluzione: 5 punti (per la buona progettazione della soluzione, come sopra indicato)
-	 * 
 	 */
 
 	private CirclerFactory factory;
 	
 	@org.junit.Before
 	public void initFactory() {
-		//this.factory = new CirclerFactoryImpl();
+		this.factory = new CirclerFactoryImpl();
 	}
 	
 	@org.junit.Test

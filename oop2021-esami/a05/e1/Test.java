@@ -17,34 +17,13 @@ public class Test {
 	 * 
 	 * Il commento alle interfacce fornite, e i metodi di test qui sotto
 	 * costituiscono la necessaria spiegazione del problema.
-	 * 
-	 * Sono considerati opzionali ai fini della possibilità di correggere
-	 * l'esercizio, ma concorrono comunque al raggiungimento della totalità del
-	 * punteggio: 
-	 * 
-	 * - uno dei quattro metodi della fcatory, a scelta
-	 * (ossia, nella parte obbligatoria è sufficiente implementarne 3 dei 4 presenti, il quarto è quindi opzionale) 
-	 * 
-	 * - la buona progettazione della soluzione, riusando più codice possibile e tenendo tutte le implementazioni
-	 * molto succinte
-	 * 
-	 * Si tolga il commento dal metodo initFactory.
-	 * 
-	 * Indicazioni di punteggio: 
-	 * 
-	 * - correttezza della parte obbligatoria: 10 punti
-	 * 
-	 * - correttezza della parte opzionale: 2 punti (metodo ulteriore)
-	 * 
-	 * - qualità della soluzione: 5 punti (per la buona progettazione della soluzione, come sopra indicato)
-	 * 
 	 */
 
 	private StateFactory factory;
 	
 	@org.junit.Before
 	public void initFactory() {
-		// this.factory = new StateFactoryImpl();
+		//this.factory = new StateFactoryImpl();
 	}
 	
 	@org.junit.Test
