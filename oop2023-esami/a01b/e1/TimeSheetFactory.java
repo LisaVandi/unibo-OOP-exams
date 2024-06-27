@@ -13,7 +13,7 @@ public interface TimeSheetFactory {
 	 * - days "day1",..."daym" (numDays elements)
 	 * - the same number of hours spent in each acticity in each day
 	 */
-	TimeSheet flat(int numActivities, int numNames, int hours);
+	TimeSheet flat(int numActivities, int numDays, int hours);
 
 	/**
 	 * @param activities
