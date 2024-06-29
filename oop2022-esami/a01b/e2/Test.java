@@ -11,19 +11,6 @@ public class Test {
      * - l'applicazione termini quando alla pressione di un pulsante ci sono 3 vicini a cui viene tolta la '*'
      *   e uno a cui viene messa -- quindi non potrà essere un click su una cella del bordo
      * Con riferimento alla figura, clickando sul pulsante di seconda riga e seconda colonna, l'applicazione si chiude. 
-     * 
-     * Sono considerati opzionali ai fini della possibilità di correggere l'esercizio, ma concorrono comunque al raggiungimento 
-     * della totalità del punteggio:
-     * - scorporamento di tutti gli aspetti che non sono di view in una interfaccia+classe esterna, via Strategy
-     * - gestione dei casi di bordo: si potrà assumere che uno non clicki mai su una cella del bordo
-     *  
-     * La classe GUI fornita, da modificare, include codice che potrebbe essere utile per la soluzione.
-     * 
-     * Indicazioni di punteggio:
-	 * - correttezza della parte obbligatoria: 10 punti
-	 * - qualità della parte opzionale: 4 punti
-	 * - correttezza della parte opzionale: 3 punti
-     * - errori di programmazione comportano decurtamento del punteggio complessivo
      */
 
     public static void main(String[] args) throws java.io.IOException {
