@@ -8,6 +8,18 @@ import java.util.*;
  * degli helper (factory e trasformatori) per RecursiveIterator, che a sua volta modella un iterator,
  * ossia una variante essenzialmente equivalente di un iteratore.
  * 
+ * Il commento alle interfacce fornite, e i metodi di test qui sotto costituiscono la necessaria 
+ * spiegazione del problema.
+ * 
+ * Sono considerati opzionali ai fini della possibilità di correggere
+ * l'esercizio, ma concorrono comunque al raggiungimento della totalità del
+ * punteggio: 
+ * - implementazione del quinto metodo helper (ossia, a scelta se ne realizzino 4,
+ *   ma considerando il metodo fromList come obbligatorio)
+ * - elementi di qualità come concisione del codice, rimozione di ripetizioni, uso parsimonioso della memoria
+ *
+ * Si tolga il commento dal metodo init.
+ * 
  * Indicazioni di punteggio:
  * - correttezza della parte obbligatoria: 10 punti
  * - correttezza della parte opzionale: 4 punti  

@@ -10,24 +10,24 @@ public class RecursiveIteratorHelpersImpl implements RecursiveIteratorHelpers {
         if (list.isEmpty()) {
             return null;
         }
-        
+
         return new RecursiveIterator<X>() {
-            List<X> currentList = list;
+            private int index = 0;
+
 
             @Override
             public X getElement() {
-                if (!currentList.isEmpty()) {
-                    return currentList.get(0);
-                }
-                return null;
+                return list.get(index);
             }
 
             @Override
             public RecursiveIterator<X> next() {
-                if (currentList.size()>1) {
-                    return fromList(currentList.subList(1, currentList.size()));
+                index += 1;
+                if (index < list.size()) {
+                    return fromList(list.subList(index, list.size()));
+                } else {
+                    return null;
                 }
-                return null;
             }
             
         };
@@ -35,35 +35,44 @@ public class RecursiveIteratorHelpersImpl implements RecursiveIteratorHelpers {
 
     @Override
     public <X> List<X> toList(RecursiveIterator<X> input, int max) {
-        List<X> result = new ArrayList<>();
-        int i = 0;
-        
-        while (i<max && input != null) {
-            result.add(input.getElement());
+        List<X> res = new ArrayList<>();
+
+        for (int i = 0; i < max && input != null; i++) {
+            X el = input.getElement();
             input = input.next();
-            i++;
+            res.add(el);
         }
-        return result;
+
+        return res;
     }
 
     @Override
+     /**
+     * @param first
+     * @param second
+     * @return an iterator of pairs of elements from first and second, orderly
+     * it provides elements until one of the two iterators is over
+     */
     public <X, Y> RecursiveIterator<Pair<X, Y>> zip(RecursiveIterator<X> first, RecursiveIterator<Y> second) {
         return new RecursiveIterator<Pair<X,Y>>() {
 
             @Override
             public Pair<X, Y> getElement() {
-                if(first != null && second != null) {
-                    return new Pair<>(first.getElement(), second.getElement());
+                if (first != null && second != null) {
+                    return new Pair<X,Y>(first.getElement(), second.getElement());
                 }
                 return null;
             }
 
             @Override
             public RecursiveIterator<Pair<X, Y>> next() {
-                if (first.next() == null || second.next() == null) {
-                    return null; 
+                RecursiveIterator<X> firstNext = first.next();
+                RecursiveIterator<Y> secondNext = second.next();
+                
+                if (firstNext != null && secondNext != null) {
+                    return zip(firstNext, secondNext);
                 }
-                return zip(first.next(), second.next());
+                return null;
             }
             
         };
@@ -100,8 +109,9 @@ public class RecursiveIteratorHelpersImpl implements RecursiveIteratorHelpers {
     @Override
     public <X> RecursiveIterator<X> alternate(RecursiveIterator<X> first, RecursiveIterator<X> second) {
         return new RecursiveIterator<X>() {
-            boolean usedFirst = true;
-            RecursiveIterator<X> currentIterator = first;
+
+            private boolean isFirst = true;
+             RecursiveIterator<X> currentIterator = first;
 
             @Override
             public X getElement() {
@@ -110,17 +120,21 @@ public class RecursiveIteratorHelpersImpl implements RecursiveIteratorHelpers {
 
             @Override
             public RecursiveIterator<X> next() {
-                currentIterator = usedFirst ? second : first;
-                usedFirst = !usedFirst;
                 if (currentIterator != null) {
-                    return this;
+                    currentIterator = isFirst ? second : first;
+                    isFirst = !isFirst;
+                if (currentIterator != null) {
+                    currentIterator = currentIterator.next(); // Avanza l'iteratore corrente
+                    if (currentIterator != null) {
+                        return this;
+                    }
                 }
-                return null;
+            }
+            return null;
                    
             }
             
         };
     }
 
-     
 }

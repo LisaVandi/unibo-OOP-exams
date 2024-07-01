@@ -21,19 +21,16 @@ public class GUI extends JFrame {
         
         ActionListener al = new ActionListener(){
             public void actionPerformed(ActionEvent e){
-        	    var button = (JButton)e.getSource();
-        	    var position = cells.get(button);
+        	    JButton button = (JButton)e.getSource();
+        	    Coord position = cells.get(button);
                 // button.setText(""+position);
-                Coord coord = cells.get(button); // su questa coord, faccio agire la logic
-                if (logic.isEmpty(coord)) {
+                if (logic.star(position)) {
                     button.setText("*");
-                    logic.star(coord);
-                } else {
+                } else if (logic.unstar(position)) {
                     button.setText(" ");
-                    logic.unstar(coord);
                 }
-
-                if (logic.isOver()) {
+                if(logic.isOver()) {
+                    System.err.println("Game Over");
                     System.exit(0);
                 }
             }

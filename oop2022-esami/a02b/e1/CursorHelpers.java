@@ -12,7 +12,7 @@ public interface CursorHelpers {
 	 * @param list, assumed not to be empty
 	 * @return a cursor over all the elements of list considered one after the other
 	 */
-	<X> Cursor<X> fromNonEmptyList(List<X> list); // mandatory
+	<X> Cursor<X> fromNonEmptyList(List<X> list);// mandatory
 
 	/**
 	 * @return a cursor over 0,1,2,3,4,... assuming we never reach MAXINT

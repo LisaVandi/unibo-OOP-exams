@@ -7,7 +7,7 @@ public class Test {
      * piazzare un insieme di alfieri (bishop) del gioco degli scacchi, in modo che nessuno attacchi nessun'altro,
      * ossia nessuno stia nella diagonale di nessun altro.
      * Nello specifico, il comportamento deve essere il seguente:
-     * - all'inizio tutti i pulsanti sono "vuoti"
+     * - all'inizio tutti i pulsanti sono "vuotiac"
      * - alla pressione di un pulsante, ci si scriva una "B" (bishop), e si disabilitino tutti pulsanti a lui in diagonale (vedi fig.1)
      * - se si preme un pulsante che già presenta una "B" non dve succedere nulla
      * - si proceda iterativamente piazzando le varie "B" e disabilitando le diagonali (in fig.2 si è piazzata una nuova "B")

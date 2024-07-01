@@ -48,6 +48,7 @@ public class Test {
 		assertEquals(20, cursor.getElement().intValue());
 		assertTrue(cursor.advance());					  // si riesce a avanzare			
 		assertEquals(30, cursor.getElement().intValue()); // 30 è il prossimo elemento	
+		assertFalse(cursor.advance());					  // NON si riesce ad avanzare	
 		assertEquals(30, cursor.getElement().intValue()); // nulla è cambiato, sempre 30
 		assertEquals(30, cursor.getElement().intValue());
 		assertFalse(cursor.advance());

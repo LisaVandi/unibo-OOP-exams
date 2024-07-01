@@ -1,8 +1,10 @@
 package a02a.e2;
 
 import javax.swing.*;
+
+import a02a.e2.Logic;
+
 import java.util.*;
-import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -14,25 +16,23 @@ public class GUI extends JFrame {
     public GUI(int size) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(100*size, 100*size);
+
+        this.logic = new LogicImpl(size);
         
         JPanel panel = new JPanel(new GridLayout(size,size));
         this.getContentPane().add(panel);
-        this.logic = new LogicImpl(size);
         
         ActionListener al = new ActionListener(){
             public void actionPerformed(ActionEvent e){
         	    var button = (JButton)e.getSource();
-        	    Coord position = cells.get(button);
+        	    var position = cells.get(button);
                 // button.setText(""+position);
-                if (logic.hit(position)) {
-                    button.setText("B"); 
-                    logic.disableDiagonal(position);
-                    
-                    // aggiorna anche logica
+                if (logic.putBishop(position)) {
+                    updateGUI();
+                    //button.setText("B");    
                 }
-                if (logic.isOver()) {
-                    logic.clear();
-                    redraw();
+                if (logic.reset()) {
+                    resetGUI();
                 }
             }
         };
@@ -46,12 +46,32 @@ public class GUI extends JFrame {
             }
         }
         this.setVisible(true);
+    }  
+    
+    private void updateGUI() {
+        for (Map.Entry<JButton, Coord> entry : cells.entrySet()) {
+            JButton button = entry.getKey();
+            Coord coord = entry.getValue();
+            if (logic.getSelectedCells().contains(coord)) {
+                button.setEnabled(false);
+            } else {
+                button.setEnabled(true); // disabilito il pulsante
+                button.setText(" ");
+            }
+        }
+        for (Coord bishop : logic.getBishops()) {
+            for (Map.Entry<JButton, Coord> entry : cells.entrySet()) {
+                if (entry.getValue().equals(bishop)) {
+                    entry.getKey().setText("B");
+                }
+            }
+        }
     }
 
-    private void redraw(){
-        for (var entry: cells.entrySet()){
-            entry.getKey().setEnabled(this.logic.isAvailable(entry.getValue()));
-            entry.getKey().setText(logic.isBishop(entry.getValue()) ? "B" : "");
+    private void resetGUI() {
+        for (JButton button : cells.keySet()) {
+            button.setEnabled(true);
+            button.setText(" ");
         }
-    }    
+    }
 }

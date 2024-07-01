@@ -7,9 +7,14 @@ import java.util.function.Consumer;
 public class CursorHelpersImpl implements CursorHelpers {
 
     @Override
+    /**
+	 * @param list, assumed not to be empty
+	 * @return a cursor over all the elements of list considered one after the other
+	 */
     public <X> Cursor<X> fromNonEmptyList(List<X> list) {
         return new Cursor<X>() {
-            int index = 0;
+            
+            private int index = 0;
 
             @Override
             public X getElement() {
@@ -20,18 +25,18 @@ public class CursorHelpersImpl implements CursorHelpers {
             }
 
             @Override
-            public boolean advance() {
-                index++;
-                return index < list.size();
+            public boolean advance() {                
+                return index < list.size() - 1;
             }
             
-        };
+        };    
     }
 
     @Override
     public Cursor<Integer> naturals() {
         return new Cursor<Integer>() {
-            int index = 0;
+
+            private int index = 0;
 
             @Override
             public Integer getElement() {
@@ -49,18 +54,19 @@ public class CursorHelpersImpl implements CursorHelpers {
 
     @Override
     /**
-    * @param input, assumed not to be empty, by definition
-    * @param max, assumed to be positive
-    * @return a cursor considering the first max-elements given by input; if
-    * max is greater than input's size, then the output is the same as the input
-    */
+	 * @param input, assumed not to be empty, by definition
+	 * @param max, assumed to be positive
+	 * @return a cursor considering the first max-elements given by input; if
+	 * max is greater then input's size, then the output is the same as the input
+	 */
     public <X> Cursor<X> take(Cursor<X> input, int max) {
         return new Cursor<X>() {
+
             private int count = 0;
 
             @Override
             public X getElement() {
-                this.count++;
+                count++;
                 return input.getElement();
             }
 
@@ -77,13 +83,8 @@ public class CursorHelpersImpl implements CursorHelpers {
     }
 
     @Override
-    /**
-	 * @param input, assumed not to be empty, by definition
-	 * @param consumer
-	 * Applies the consumer (that is, its method accept) to all elements of the cursor.
-	 * This application typically produces some side-effect.
-	 */
     public <X> void forEach(Cursor<X> input, Consumer<X> consumer) {
+        consumer.accept(input.getElement());
         while (input.advance()) {
             consumer.accept(input.getElement());
         }
@@ -96,13 +97,13 @@ public class CursorHelpersImpl implements CursorHelpers {
 	 * @return extract elements from cursor (no more than max), and creates a list
 	 */
     public <X> List<X> toList(Cursor<X> input, int max) {
-        List<X> result = new ArrayList<>();
+        List<X> res = new ArrayList<>();
         Cursor<X> newCursor = take(input, max);
-        result.add(newCursor.getElement());
+        res.add(newCursor.getElement());
         while(newCursor.advance()){
-            result.add(newCursor.getElement());
+            res.add(newCursor.getElement());
         }
-        return result;
+        return res;
     }
 
 }

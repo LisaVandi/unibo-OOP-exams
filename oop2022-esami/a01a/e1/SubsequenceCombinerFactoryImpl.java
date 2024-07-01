@@ -11,27 +11,32 @@ public class SubsequenceCombinerFactoryImpl implements SubsequenceCombinerFactor
         return new SubsequenceCombiner<Integer,Integer>() {
 
             @Override
+            /**
+             * @return a SubsequenceCombiner that turns triplets of integers into their sum
+             * e.g.: e1,e2,e3,e4,e5,e6,e7,e8 --> (e1+e2+e3),(e4+e5+e6),(e7+e8)
+             */
             public List<Integer> combine(List<Integer> list) {
-                List<Integer> result = new ArrayList<>();
+                List<Integer> res = new ArrayList<>();
                 int count = 0;
                 int sum = 0;
+                
                 for (Integer integer : list) {
-                    sum += integer; 
-                    count++; 
-                    if (count == 3) {
-                        result.add(sum);
-                        count = 0;
+                    sum += integer;
+                    count += 1;
+                    
+                    if (count % 3 == 0) {
+                        res.add(sum);
                         sum = 0;
+                        count = 0;
                     }
                 }
-                // considero elementi rimasti che non formano una tripletta
                 if (count > 0) {
-                    result.add(sum);
+                    res.add(sum);
                 }
-                return result;
+                return res;
             }
             
-        };    
+        };
     }
 
     @Override
@@ -40,66 +45,76 @@ public class SubsequenceCombinerFactoryImpl implements SubsequenceCombinerFactor
 
             @Override
             public List<List<X>> combine(List<X> list) {
-                List<List<X>> result = new ArrayList<>();
-                List<X> currentTriplet = new ArrayList<>();
+                List<List<X>> res = new ArrayList<>();
+                List<X> intList = new ArrayList<>();
+                int count = 0;
                 
-                for (X elem : list) {
-                    currentTriplet.add(elem); 
-                    if(currentTriplet.size() == 3){
-                        // result.add(currentTriplet); NON FUNZIONA
-                        result.add(new ArrayList<>(currentTriplet));
-                        currentTriplet.clear();
+                for (X x : list) {
+                    intList.add(x);
+                    count += 1;
+
+                    if (count == 3) {
+                        res.add(new ArrayList<>(intList));
+                        intList.clear();
+                        count = 0;
                     }
                 }
-                if (!currentTriplet.isEmpty()) {
-                    result.add(currentTriplet);
+                if (count > 0) {
+                    res.add(new ArrayList<>(intList));
                 }
-                return result;
-                
+                return res;
             }
             
         };
     }
 
     @Override
+    /**
+	 * @return a SubsequenceCombiner that turns subsequences of integers ending with a zero
+	 * into their size (zero excluded)
+	 * e.g.: e1,e2,0,f1,f2,f3,0,g1,g2,g3,g4,g5 --> 2,3,5
+	 */
     public SubsequenceCombiner<Integer, Integer> countUntilZero() {
-       return new SubsequenceCombiner<Integer,Integer>() {
+        return new SubsequenceCombiner<Integer,Integer>() {
 
-        @Override
-        public List<Integer> combine(List<Integer> list) {
-            int count = 0;
-            List<Integer> result = new ArrayList<>();
+            @Override
+            public List<Integer> combine(List<Integer> list) {
+                int count = 0;
+                List<Integer> res = new ArrayList<>();
 
-            for (Integer elem : list) {
-                if (elem != 0) {
+                for (Integer integer : list) {
                     count++;
-                } else {
-                    if (count > 0) {
-                        result.add(count);
+                    if (integer.equals(0)) {
+                        res.add(count - 1);
                         count = 0;
+                       // res.clear();
                     }
                 }
+                if (count > 0) {
+                    res.add(count);
+                }
+
+                return res;
             }
-            if (count > 0) {
-                result.add(count);
-            }
-            return result;
-        }
-        
-       };
+            
+        };
     }
 
     @Override
+    /**
+	 * @return a generic SubsequenceCombiner that maps one element of the input into one of the ouput
+	 * e.g.: e1,e2,e3 --> f(e1),f(e2),f(e3)
+	 */
     public <X, Y> SubsequenceCombiner<X, Y> singleReplacer(Function<X, Y> function) {
         return new SubsequenceCombiner<X,Y>() {
 
             @Override
             public List<Y> combine(List<X> list) {
-                List<Y> result = new ArrayList<>();
-                for (X x: list) {
-                    result.add(function.apply(x));
+                List<Y> res = new ArrayList<>();
+                for (X x : list) {
+                    res.add(function.apply(x));
                 }
-                return result;
+                return res;
             }
             
         };
@@ -116,25 +131,27 @@ public class SubsequenceCombinerFactoryImpl implements SubsequenceCombinerFactor
 
             @Override
             public List<List<Integer>> combine(List<Integer> list) {
-                List<Integer> tmp = new ArrayList<>();
-                List<List<Integer>> result = new ArrayList<>();
+                List<List<Integer>> res = new ArrayList<>();
+                List<Integer> intermedIntegers = new ArrayList<>();
                 int sum = 0;
 
-                for (Integer elem : list) {
-                    sum += elem; 
-                    tmp.add(elem);
+                for (Integer integer : list) {
+                    sum += integer;
+                    intermedIntegers.add(integer);
+
                     if (sum >= threshold) {
+                        res.add(new ArrayList<>(intermedIntegers));
                         sum = 0;
-                        result.add(new ArrayList<>(tmp));
-                        tmp.clear();
+                        intermedIntegers.clear();
                     }
                 }
-                result.add(new ArrayList<>(tmp));
-                
-                return result; 
+                if (sum > 0) {
+                    res.add(intermedIntegers);
+                }
+                return res;
             }
             
         };
     }
-
+    
 }

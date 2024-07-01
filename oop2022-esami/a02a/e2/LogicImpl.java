@@ -6,55 +6,60 @@ import java.util.Set;
 public class LogicImpl implements Logic {
 
     private final int size;
-    private Set<Coord> selectedCells = new HashSet<>();
-    private Set<Coord> disabledCells = new HashSet<>();
-    private Set<Coord> bishops = new HashSet<>();
 
     public LogicImpl(final int size) {
         this.size = size;
-        this.clear();
     }
 
+    Set<Coord> selectedCells = new HashSet<>();
+    Set<Coord> bishops = new HashSet<>();
+
     @Override
-    public boolean hit(Coord coord) {
-        if(selectedCells.contains(coord) || disabledCells.contains(coord)) {
-            return false;
+    public boolean putBishop(Coord coord) {
+        if (!selectedCells.contains(coord)) {
+            selectedCells.add(coord);
+            bishops.add(coord);
+            disableDiagonal(coord);
+            return true;
         }
-        bishops.add(coord);
-        selectedCells.add(coord);
-        return true;
+        return false;
     }
 
     @Override
     public void disableDiagonal(Coord coord) {
-        for (int i = 1; i < size; i++) {
-            disabledCells.add(new Coord(coord.row() + i, coord.col() + i)); // riga e colonna + 1 
-            disabledCells.add(new Coord(coord.row() - i, coord.col() - i)); // riga e colonna - 1
-            disabledCells.add(new Coord(coord.row() + i, coord.col() - i));  
-            disabledCells.add(new Coord(coord.row() - i, coord.col() + i));
+        int[] deltas = {-1, 1};
+        for (int deltaRow : deltas) {
+            for (int deltaCol : deltas) {
+                int row = coord.row() + deltaRow;
+                int col = coord.col() + deltaCol;
+                while (row >= 0 && row < size && col >= 0 && col < size) {
+                    selectedCells.add(new Coord(row, col));
+                    row += deltaRow;
+                    col += deltaCol;
+                }
+            }
         }    
+    
     }
 
     @Override
-    public boolean isOver() {
-        return size == bishops.size();
-        
+    public boolean reset() {
+        /*
+         * quando non c'è più nessuna "B" piazzabile, perché è tutto disabilitato, allora premendo una "B" l'applicazione riparta
+         * dall'inizio, ossia con tutti i pulsanti vuoti e abilitati, pronti per una nuova esecuzione
+         */
+        selectedCells.clear();
+        bishops.clear();
+        return true;
     }
 
     @Override
-    public boolean isBishop(Coord coord) {
-        return bishops.contains(coord);
+    public Set<Coord> getSelectedCells() {
+        return selectedCells;    
     }
 
     @Override
-    public void clear() {
-        selectedCells = new HashSet<>();
-        bishops = new HashSet<>();
-        disabledCells = new HashSet<>();
-    }
-
-    @Override
-    public boolean isAvailable(Coord coord) {
-        return !disabledCells.contains(coord);
+    public Set<Coord> getBishops() {
+        return bishops; 
     }
 }
